@@ -39,7 +39,7 @@ public class CrosswordFiller {
         for(Crossword c:variants){
             System.out.println(c);
         }
-        System.out.println("**********************************************next");
+        System.out.println("**********************************************");
 
 
         variants = newVariants;

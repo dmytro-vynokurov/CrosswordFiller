@@ -1,4 +1,5 @@
 import logic.CrosswordFiller;
+import model.Cell;
 import model.Crossword;
 
 import java.util.List;
@@ -15,7 +16,11 @@ public class Runner {
 
         List<Crossword> result = filler.fillCrossword();
 
-        System.out.println(result.size());
+        if(result.size()>0){
+            System.out.println(result.get(0));
+        }else{
+            System.out.println("Cannot fill the crossword");
+        }
 
 
     }

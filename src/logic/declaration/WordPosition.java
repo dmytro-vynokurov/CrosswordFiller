@@ -15,7 +15,7 @@ public class WordPosition {
     private final int startRow;
     private final Direction direction;
 
-    public WordPosition(Cell[] cells, int startColumn, int startRow, Direction direction) {
+    public WordPosition(Cell[] cells, int startRow, int startColumn, Direction direction) {
         this.cells = cells;
         this.startColumn = startColumn;
         this.startRow = startRow;
@@ -44,6 +44,30 @@ public class WordPosition {
 
     public int getLength(){
         return cells.length;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WordPosition that = (WordPosition) o;
+
+        if (startColumn != that.startColumn) return false;
+        if (startRow != that.startRow) return false;
+        if (!Arrays.equals(cells, that.cells)) return false;
+        if (direction != that.direction) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = cells != null ? Arrays.hashCode(cells) : 0;
+        result = 31 * result + startColumn;
+        result = 31 * result + startRow;
+        result = 31 * result + (direction != null ? direction.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -60,9 +60,43 @@ public class Crossword {
         return field.length;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Crossword crossword = (Crossword) o;
+
+        if (words != null ? !words.equals(crossword.words) : crossword.words != null) return false;
+        if(this.field==null && crossword.field==null) return true;
+        if(this.field!=null && crossword.field==null) return false;
+        if(this.field==null && crossword.field!=null) return false;
+        if(this.getHeight()!=crossword.getHeight())return false;
+        if(this.getWidth()!=crossword.getWidth())return false;
+
+        Cell thisCell,otherCell;
+        for(int i=0;i<this.getHeight();i++){
+            for(int j=0;j<this.getWidth();j++){
+                thisCell=this.field[i][j];
+                otherCell=crossword.field[i][j];
+                if((thisCell != otherCell) && (!thisCell.equals(otherCell)))return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return words != null ? words.hashCode() : 0;
+    }
+
     public int getWidth() {
         return field[0].length;
+
     }
+
+
 
     @Override
     public String toString() {
@@ -75,6 +109,10 @@ public class Crossword {
 
                 sb.append("  ");
             }
+            sb.append("\n");
+        }
+        for(String word: words) {
+            sb.append(word);
             sb.append("\n");
         }
         return sb.toString();

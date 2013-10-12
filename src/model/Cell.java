@@ -37,6 +37,26 @@ public class Cell {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cell cell = (Cell) o;
+
+        if (empty != cell.empty) return false;
+        if (value != cell.value) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) value;
+        result = 31 * result + (empty ? 1 : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "{"+value+"}";
     }

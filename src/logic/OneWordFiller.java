@@ -24,7 +24,7 @@ public class OneWordFiller {
         }
     }
 
-    private boolean wordMatches(WordPosition wordPosition, String word) {
+    boolean wordMatches(WordPosition wordPosition, String word) {
         if (word.length() != wordPosition.getLength()) return false;
 
         Cell currentCell;
@@ -37,7 +37,7 @@ public class OneWordFiller {
         return true;
     }
 
-    private Crossword fillCrosswordWithSingleWord(Crossword crossword, WordPosition wordPosition, String word){
+    Crossword fillCrosswordWithSingleWord(Crossword crossword, WordPosition wordPosition, String word){
         Crossword copy = new Crossword(crossword,word);
 
         int currentRow = wordPosition.getStartRow();
@@ -50,18 +50,18 @@ public class OneWordFiller {
                 newCell = new Cell(word.charAt(i));
                 copy.setCell(newCell,currentRow,currentColumn);
             }
-            currentRow = nextVertical(currentRow,direction);
-            currentColumn = nextHorizontal(currentColumn,direction);
+            currentRow = nextRow(currentRow, direction);
+            currentColumn = nextColumn(currentColumn, direction);
         }
         return copy;
     }
 
-    private int nextHorizontal(int position,Direction direction){
+    int nextColumn(int position, Direction direction){
         if(direction==Direction.HORIZONTAL) return position+1;
         else return position;
     }
 
-    private int nextVertical(int position,Direction direction){
+    int nextRow(int position, Direction direction){
         if(direction==Direction.VERTICAL) return position+1;
         else return position;
     }
