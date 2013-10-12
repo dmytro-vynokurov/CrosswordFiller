@@ -50,11 +50,11 @@ public class FirstWordExtractor {
     WordPosition extractHorizontal(Crossword crossword,int i, int j) {
         int left = j;
         while ((left>=0)&&(crossword.getCell(i, left) != null)) left--;
-        left++;
+        if(left<j)left++;
 
         int right = j;
         while ((right<=crossword.getWidth()-1)&&(crossword.getCell(i, right) != null)) right++;
-        right--;
+        if(right>j)right--;
 
         return extractHorizontalInRange(crossword,i, left, right);
     }
@@ -73,11 +73,11 @@ public class FirstWordExtractor {
     WordPosition extractVertical(Crossword crossword,int i, int j) {
         int top = i;
         while ((top>=0)&&(crossword.getCell(top, j) != null)) top--;
-        top++;
+        if(top<i)top++;
 
         int bottom = i;
         while ((bottom<=crossword.getHeight()-1)&&(crossword.getCell(bottom, j) != null)) bottom++;
-        bottom--;
+        if(bottom>i)bottom--;
 
         return extractVerticalInRange(crossword,top, bottom, j);
     }

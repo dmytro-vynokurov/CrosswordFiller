@@ -44,6 +44,28 @@ public class Crossword {
         words.remove(withoutWord);
     }
 
+    public Crossword(String[] field,List<String> words,char symbol){
+        this.field = new Cell[field.length][];
+        for(int i=0;i<field.length;i++){
+            this.field[i]=new Cell[field[0].length()];
+        }
+
+        for(int i=0;i<this.field.length;i++){
+            for(int j=0;j<this.field[0].length;j++){
+                char code = field[i].charAt(j);
+                if(code=='0'){
+                    this.field[i][j]=null;
+                }else if(code=='1'){
+                    this.field[i][j]=new Cell();
+                }else{
+                    this.field[i][j]=new Cell(symbol);
+                }
+            }
+        }
+
+        this.words=words;
+    }
+
     public Cell getCell(int i, int j) {
         return field[i][j];
     }
