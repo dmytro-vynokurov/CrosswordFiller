@@ -1,5 +1,6 @@
+package util;
+
 import logic.CrosswordFiller;
-import model.Cell;
 import model.Crossword;
 
 import java.util.List;
