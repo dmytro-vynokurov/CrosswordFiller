@@ -11,9 +11,9 @@ import functional.logic.CrosswordFiller._
  */
 object Runner {
   def main(args: Array[String]) {
-    val crossword: Crossword = new Crossword(Util.DEFAULT_FIELD_1, Util.DEFAULT_WORDS_1)
+//    val crossword: Crossword = new Crossword(Util.DEFAULT_FIELD_1, Util.DEFAULT_WORDS_1)
 //    val crossword: Crossword = new Crossword(Util.DEFAULT_FIELD_3, Util.DEFAULT_WORDS_3, 'л')
-//    val crossword: Crossword = new Crossword(Util.DEFAULT_FIELD_3, Util.DEFAULT_WORDS_4, 'в')
+    val crossword: Crossword = new Crossword(Util.DEFAULT_FIELD_3, Util.DEFAULT_WORDS_4, 'в')
 
     val result: List[Crossword] = fillCrossword(crossword)
 

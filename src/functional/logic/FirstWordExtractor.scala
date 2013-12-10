@@ -17,25 +17,31 @@ object FirstWordExtractor {
   }
 
   def tryCell(crossword: Crossword,row: Int,col: Int):Option[WordPosition] = {
+    val isFilled = crossword.getCell(row,col)!=null && !crossword.getCell(row,col).isEmpty
+    if(!isFilled) return tryNextCell(crossword,row,col)
+
     getSideWhereEmptyNeighbour(crossword,row,col,LEFT) match {
-      case Some(side) => Some(getWordPosition(crossword,row,col,side))
-      case None => getNextCellToTry(crossword,row,col) match {
-        case Some((x,y)) => tryCell(crossword,x,y)
-        case None => None
-      }
+      case Some(side) if isFilled => Some(getWordPosition(crossword,row,col,side))
+      case _ => tryNextCell(crossword,row,col)
     }
   }
+
+  private def tryNextCell(crossword:Crossword,row:Int,col:Int):Option[WordPosition] =
+    getNextCellToTry(crossword,row,col) match {
+      case Some((x,y)) => tryCell(crossword,x,y)
+      case None => None
+    }
   
   private def getSideWhereEmptyNeighbour(crossword:Crossword,row:Int,col:Int,side:Side):Option[Side] = {
-      val isCellEmpty = getNeighbourCoordinates(crossword,row,col,side) match {
+      val isNeighbourEmpty = getNeighbourCoordinates(crossword,row,col,side) match {
         case Some((x,y)) =>  {
-          val cellValue:Cell = crossword.getCell(x,y)
-          if(cellValue==null || cellValue.isEmpty) false
-          else true
+          val neighbourCell = crossword.getCell(x,y)
+          if(neighbourCell!=null && neighbourCell.isEmpty) true
+          else false
         }
         case None => false
       }
-      if (isCellEmpty) Some(side)
+      if (isNeighbourEmpty) Some(side)
       else next(side) match {
         case Some(nextSide:Side) => getSideWhereEmptyNeighbour(crossword,row,col,nextSide)
         case None => None
@@ -77,12 +83,12 @@ object FirstWordExtractor {
   }
 
   private def getCells(crossword:Crossword,a:(Int,Int),b:(Int,Int),side:Side):List[Cell] = {
+    val cell =crossword.getCell(a._1,a._2)
     if(a!=b){
-      val cell =crossword.getCell(a._1,a._2)
       val nextCellCoordinates = getNeighbourCoordinates(crossword,a._1,a._2,side).get
       val otherCells =getCells(crossword,nextCellCoordinates,b,side)
       cell::otherCells
-    }else Nil
+    }else cell::Nil
   }
 
   private def getSideFromPointToPoint(a:(Int,Int),b:(Int,Int)):Side = {
@@ -104,6 +110,7 @@ object FirstWordExtractor {
   def getNextCellToTry(crossword:Crossword,row:Int,col:Int):Option[(Int,Int)] = {
     val nextCol:Int = if(col == crossword.getWidth-1) 0 else col+1
     val nextRow:Int = if(nextCol != 0) row else if(row != crossword.getHeight-1) row+1 else return None
+
     Some(nextRow,nextCol)
   }
 }

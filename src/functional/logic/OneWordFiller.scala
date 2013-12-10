@@ -35,11 +35,13 @@ object OneWordFiller {
   }
   
   private def fillCrossWordWithSingleWord(crossword:Crossword,cell:(Int,Int),direction:Direction,letters:List[Char]):Unit = {
-    val newCell = new Cell(letters.head)
-    val (row,col) = cell
-    crossword.setCell(newCell,row,col)
+    if(!letters.isEmpty){
+      val newCell = new Cell(letters.head)
+      val (row,col) = cell
+      crossword.setCell(newCell,row,col)
 
-    if(!letters.isEmpty) fillCrossWordWithSingleWord(crossword,nextCell(cell,direction),direction,letters.tail)
+      fillCrossWordWithSingleWord(crossword,nextCell(cell,direction),direction,letters.tail)
+    }
   }
   
   private def nextCell(a:(Int,Int),direction:Direction):(Int,Int) ={
